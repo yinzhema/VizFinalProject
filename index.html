@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title> Introduction to JavaScript </title>
+
+    <!-- Load CSS files -->
+
+    <!-- Milligram CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+    <!-- You CSS rules-->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Load Javascript files -->
+    <script defer src="https://d3js.org/d3.v4.js"></script>
+    <script defer src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script defer src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"
+    ></script>
+
+    <!-- Your code -->
+    <script defer src="script.js"></script>
+    
+  </head>
+  <body>
+    <div class="container">
+      <h1>Make your Selection</h1>
+
+      <div class="user-control">
+        <select id="line-type" class="form-control">
+          <option value="LE">Life Expectancy</option>
+          <option value="GDP">GDP per Capita</option>
+          <option value="HF">Human Freedom Index</option>
+          <option value="HS">Life Satisfaction Score</option>
+        </select>
+      </div>
+
+      <!-- Parent container of our bar chart -->
+      <div class='Chart'></div>
+      <div class='barChart'></div>
+    </div>
+   
+  </body>
+</html>
