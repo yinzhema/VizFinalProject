@@ -4,8 +4,8 @@ let country='United States'
 
 function lineChart(selection,country){
 
-	const margin = ({top: 60, right: 40, bottom: 40, left: 40})
-	const width=600-margin.left-margin.right,
+	const margin = ({top: 60, right: 200, bottom: 40, left: 40})
+	const width=800-margin.left-margin.right,
 	height=350-margin.top-margin.bottom
 	
 	let svg=d3.select('.Chart').append('svg')
@@ -108,7 +108,14 @@ function lineChart(selection,country){
 		  .y(function(d){
 			  return yScale(d.value)
 		  })
-
+		  
+		  var happinessLine=d3.line()
+		  .x(function(d){
+			  return xScale(d.key)
+		  })
+		  .y(function(d){
+			  return yScale2(d.value)
+		  })
 
 			var lines=svg.selectAll('.lineChart')
 				.data([filteredData])
@@ -134,12 +141,48 @@ function lineChart(selection,country){
 			line1.enter()
 				.append('path')
 				.attr('class','lineChart1')
-				.attr("d", line)
+				.attr("d", happinessLine)
 				.attr("fill", "none")
 				.attr("stroke", "red")
 				.attr("stroke-width", 1.5)
+				
+			var circles=svg.selectAll('.filteredCircles')
+				.data(filteredData)
+				
+			circles.enter()
+				.append('circle')
+				.attr('class','filteredCircles')
+				.merge(circles)
+				.attr('cx',function(d){
+					return xScale(d.key)
+				})
+				.attr('cy',function(d){
+					return yScale(d.value)
+				})
+				.attr('r',3)
+				.attr('fill','steelblue')
 
-			
+			var happinessCircles=svg.selectAll('.happinessCircles')
+				.data(happinessData)
+				
+			happinessCircles.enter()
+				.append('circle')
+				.attr('class','happinessCircles')
+				.merge(circles)
+				.attr('cx',function(d){
+					return xScale(d.key)
+				})
+				.attr('cy',function(d){
+					return yScale2(d.value)
+				})
+				.attr('r',3)
+				.attr('fill','red')
+				.on('click',function(event,d){
+					const pos=d3.mouse(this)
+					const yr=xScale.invert(pos[0]).getYear()-100+2000
+					barChart(yr.toString())
+				})
+
 
 			svg.select('.x-axis')
 				.call(xAxis)
@@ -152,19 +195,43 @@ function lineChart(selection,country){
 			  .call(yAxis2)
 			  .attr('transform',`translate(${width+10},0)`)
 
+			let title;
+
 			if(selection=='LE'){
-				svg.select('.y-title')
-		  			.text('Life Expectancy')
+				title='Life Expectancy'
 			} else if (selection=='GDP'){
-				svg.select('.y-title')
-					.text('GDP per Capita')
+				title='GDP per Capita'
 			} else if (selection=='HF'){
-				svg.select('.y-title')
-					.text('Human Freedom Index')
+				title='Human Freedom Index'
 			} else{
-				svg.select('.y-title')
-					.text('Life Satisfaction Score')
+				title='Life Satisfaction Score'
 			}  
+
+			svg.select('.y-title')
+					.text(title)
+
+			svg.append('circle')
+				.attr('cx',630)
+				.attr('cy',0)
+				.attr('r',6)
+				.attr('fill','steelblue')
+
+			svg.append('text')
+				.attr('x',640)
+				.attr('y',3)
+				.text(title)
+
+			svg.append('circle')
+				.attr('cx',630)
+				.attr('cy',15)
+				.attr('r',6)
+				.attr('fill','red')
+
+			svg.append('text')
+				.attr('x',640)
+				.attr('y',18)
+				.text('Happiness Score')
+
 	  })
 }
 
@@ -174,7 +241,9 @@ lineChart(selection,country)
 function barChart(time){
 	const margin = ({top: 40, right: 20, bottom: 40, left: 20})
 	const width=750-margin.left-margin.right,
-	  	height=500-margin.top-margin.bottom
+		  height=500-margin.top-margin.bottom
+		  
+	d3.select('.barChart').html("")
 
 	const svg=d3.select('.barChart').append('svg')
 			.attr('width',width+margin.left+margin.right)
@@ -233,6 +302,14 @@ function barChart(time){
 		bars.enter()
 			.append("rect")
 			.attr('x',function(d,i){
+				return 0
+			})
+			.attr('y',function(d,i){
+				return height
+			})
+			.merge(bars)
+			.transition()
+			.attr('x',function(d,i){
 				return xScale(d.Country)+3
 			})
 			.attr('y',function(d,i){
@@ -244,7 +321,9 @@ function barChart(time){
 			})
 			.attr('fill','skyblue')
 			.attr('opacity',1)
-			
+		
+		bars.exit()
+			.remove()
 
 		const xAxis=d3.axisBottom()
 			.scale(xScale)
@@ -263,15 +342,14 @@ function barChart(time){
 			.attr("transform", "rotate(-15)")
 
 		svg.select('.y-title')
-			.text('Happiness Score')
+			.text('Top 10 Happiness Score Country in '+time)
 	})
 }
-
-barChart('2017')
 
 
 const dropdownElement=document.querySelector("#line-type");
 dropdownElement.addEventListener('change',(event)=>{
+	d3.select('.Chart').html('')
 	if(event.target.value==='LE'){
 		selection='LE'
 		lineChart(selection,country)
