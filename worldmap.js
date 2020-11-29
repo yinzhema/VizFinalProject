@@ -1,3 +1,14 @@
+import spiderChart from './spiderChart.js'
+import line from './lineChart.js'
+import bar from './lineChart.js'
+
+let country='United States'
+let selection='LE'
+
+spiderChart(country);
+line(selection,country)
+
+
 Promise.all([ // load multiple files
     d3.csv('happinesssss.csv', d3.autoType),
     d3.json('world-110m.json')
@@ -104,7 +115,16 @@ svg.selectAll("path")
         .style('left', (event.x + 10) + 'px')
         .style('top', (event.y + 10) + 'px');
     }
-  });
+  })
+  .on('click',(event,features)=>{
+    const country = happiness.find(s=>s.Country==features.properties.name);
+    if (country){
+      spiderChart(country.Country);
+      line(selection,country.Country);
+      document.getElementById('instructions').innerText="We are looking at the break down happiness factors for "+country.Country
+      document.getElementById('lineInstructions').innerText="We are exploring the correlation betweena Happiness Score and these following factors: GDP per Capita, Life Expectancy, Freedom, Life Satisfaction. We are currently exploring these correlations in "+country.Country
+    }
+  })
 
 
 

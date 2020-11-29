@@ -15,11 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- import the webpage's javascript file -->
-    <script defer src="worldmap.js"></script>
-    <script defer src="lineChart.js"></script>
-    <script defer src="radarChart.js"></script>
-    <script defer src="drawRadar.js"></script>
+    <script src="worldmap.js" defer type="module"></script>
+    <!-- <script defer src="lineChart.js"></script>
+    <script defer src="spiderChart.js"></script> -->
+    <!-- <script defer src="radarChart.js"></script>
+    <script defer src="drawRadar.js"></script> -->
     <script src="https://unpkg.com/topojson@3"></script>
     <script
       defer
@@ -49,11 +51,13 @@
       <br><br><br><br>
       <div>
         <svg class="arrow">
-          <path class="a1" d="M0 0 L30 22 L60 0"></path>
-          <path class="a2" d="M0 20 L30 42 L60 20"></path>
-          <path class="a3" d="M0 40 L30 62 L60 40"></path>
+          <a href="#world-map" id='hyperlink'>
+            <path class="a1" d="M0 0 L30 22 L60 0"></path>
+            <path class="a2" d="M0 20 L30 42 L60 20"></path>
+            <path class="a3" d="M0 40 L30 62 L60 40"></path>  
+          </a>
         </svg>
-      </div>
+    </div>
       
       
       <p class = "descript" id = "data-source">
@@ -64,7 +68,7 @@
       
 
 
-    <section class ="world-map">
+    <section class ="world-map" id="world-map">
       <h2>What are the happiest countries in the world today?</h2>
       <p>
         The happiness scores and rankings use data from the Gallup World Poll.
@@ -80,17 +84,17 @@
         Which factors have had the biggest impact on happiness as of 2019?
       </h2>
       <p id="instructions">
-        View bottom of page for project update! Spider chart is still in
-        progress!
+        We are looking at the break down happiness factors for United States
       </p>
+      <div class='spider'></div>
       
     </section>
 
     <section class = "line-bar">
       <h2>Are we getting happier?</h2>
-      <p>
+      <p id='lineInstructions'>
         We are exploring the correlation betweena Happiness Score and these following factors: GDP per Capita, Life Expectancy, Freedom, Life
-        Satisfaction.
+        Satisfaction. We are currently exploring these correlations in United States.
       </p>
       <div class='row'>
         <div class='column' id='columnInstr'>

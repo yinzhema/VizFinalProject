@@ -1,3 +1,7 @@
+a{
+  transition: 10s;
+}
+
 /*map*/
 .country {
     stroke: #fff;
@@ -17,7 +21,7 @@ scroll-snap-type: y mandatory;
 section {
 scroll-snap-align: start;
 height: 110vh;
-padding: 50px;
+/* padding: 50px; */
 }
 
 .intro{
@@ -25,6 +29,7 @@ padding: 50px;
   text-align: center;
   padding: 40px;
   background-color: #F2F2F2;
+  margin-bottom: 50px;
 }
 
 .line-bar{
@@ -97,6 +102,11 @@ p {
 .world-map{
   background-color: rbg(194, 207, 200);
 }
+
+.spider{
+  margin-left: 300px;
+}
+
 .line-bar{
   height: 160vh;
 }
