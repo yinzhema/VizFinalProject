@@ -1,51 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+
   <head>
     <meta charset="utf-8" />
-    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title> Introduction to JavaScript </title>
 
-    <!-- Load CSS files -->
+    <title>World Happiness | Project </title>
+    <!-- import the webpage's stylesheet -->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
+    <link rel="stylesheet" href="/style.css" />
 
-    <!-- Milligram CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
-
-    <!-- You CSS rules-->
-    <link rel="stylesheet" href="style.css" />
-
-    <!-- Load Javascript files -->
-    <script defer src="https://d3js.org/d3.v4.js"></script>
-    <script defer src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-    <script defer src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.17.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@4.17.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.12.2"></script>
+    <!-- import the webpage's javascript file -->
+    <script defer src="worldmap.js"></script>
+    <script defer src="lineChart.js"></script>
+    <script defer src="radarChart.js"></script>
+    <script defer src="drawRadar.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
     <script
       defer
-      src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.1.1/d3.min.js"
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.1.1/d3.min.js"
     ></script>
-
-    <!-- Your code -->
-    <script defer src="script.js"></script>
     
   </head>
+
   <body>
-    <div class="container">
-      <h1>Make your Selection</h1>
-
-      <div class="user-control">
-        <select id="line-type" class="form-control">
-          <option value="LE">Life Expectancy</option>
-          <option value="GDP">GDP per Capita</option>
-          <option value="HF">Human Freedom Index</option>
-          <option value="HS">Life Satisfaction Score</option>
-        </select>
+    <main class="scroll-container">
+    <section class = "intro">
+      <img src ="https://cdn.glitch.com/cd026228-e628-4e0f-8298-bc49b2bff20b%2Fgiphy.gif?v=1606209623864" width="160" height="160">
+      <h1>
+        Is the World Happy?
+      </h1>
+      <h4>
+      Ivan Ip, Kim Nguyen, Yinzhe Ma, and Anna Guo
+      </h4>
+      <p class = "descript">
+        As society enters a hyper-competitive phase in the 21st century, our
+        generation is experiencing a historic amount of pressure and
+        competition. 
+        
+        Sometimes we find ourselves asking a seemingly simple yet important question: Are we happy? And what
+        makes us happy?
+      </p>
+      <br><br><br><br>
+      <div>
+        <svg class="arrow">
+          <path class="a1" d="M0 0 L30 22 L60 0"></path>
+          <path class="a2" d="M0 20 L30 42 L60 20"></path>
+          <path class="a3" d="M0 40 L30 62 L60 40"></path>
+        </svg>
       </div>
+      
+      
+      <p class = "descript" id = "data-source">
+        Data Source:
+        <a id='dataSourceLink' href="https://www.gallup.com/analytics/247355/gallup-world-happiness-report.aspx">Gallup World Poll</a>
+      </p>  
+    </section>
+      
 
-      <!-- Parent container of our bar chart -->
-      <div class='Chart'></div>
-      <div class='barChart'></div>
-    </div>
-   
+
+    <section class ="world-map">
+      <h2>What are the happiest countries in the world today?</h2>
+      <p>
+        The happiness scores and rankings use data from the Gallup World Poll.
+        The scores are based on answers to the main life evaluation question
+        asked in the poll.
+      </p>
+      <div class="chart"></div>
+      <!-- <div class="radarChart"></div>-->
+    </section>
+
+    <section>
+      <h2>
+        Which factors have had the biggest impact on happiness as of 2019?
+      </h2>
+      <p id="instructions">
+        View bottom of page for project update! Spider chart is still in
+        progress!
+      </p>
+      
+    </section>
+
+    <section class = "line-bar">
+      <h2>Are we getting happier?</h2>
+      <p>
+        We are exploring the correlation betweena Happiness Score and these following factors: GDP per Capita, Life Expectancy, Freedom, Life
+        Satisfaction.
+      </p>
+      <div class='row'>
+        <div class='column' id='columnInstr'>
+          <p id='selectIntruction'>Please select a factor to explore</p>
+          <p id='lineChartIntruction'>Click on a Happiness Score dot on the line chart to view the world wide happiness ranking</p>
+        </div>
+        <div class='column' id='columnChart'>
+          <div class="user-control">
+            <select id="line-type" class="form-control">
+              <option value="LE">Life Expectancy</option>
+              <option value="GDP">GDP per Capita</option>
+              <option value="HF">Human Freedom Index</option>
+              <option value="HS">Life Satisfaction Score</option>
+            </select>
+          </div>
+          <div class="line"></div>
+        </div>
+      </div>
+      <hr class='hidden'>
+      <div class="bar"></div>
+      <div id='tooltipBar' class='hidden'></div>
+    </section>
+
+    <section>
+      <h2>
+       How have the rankings changed in the past 4 years?
+      </h2>
+      <p>
+        We are examining the rankings for the happiest countries in the past 4
+        years based on their scores!
+      </p>
+      <div id="vis"></div>
+      <script type="text/javascript">
+        var yourVlSpec = {
+          $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+          title: { text: "Top Countries  Rankings", frame: "bounds" },
+          width: 600,
+          height: 400,
+          data: {
+            values: [
+              { Country: "Switzerland", year: 2015, rank: 1 },
+              { Country: "Switzerland", year: 2016, rank: 2 },
+              { Country: "Switzerland", year: 2017, rank: 4 },
+              { Country: "Switzerland", year: 2018, rank: 5 },
+              { Country: "Switzerland", year: 2019, rank: 6 },
+              { Country: "Iceland", year: 2015, rank: 2 },
+              { Country: "Iceland", year: 2016, rank: 3 },
+              { Country: "Iceland", year: 2017, rank: 3 },
+              { Country: "Iceland", year: 2018, rank: 4 },
+              { Country: "Iceland", year: 2019, rank: 4 },
+              { Country: "Denmark", year: 2015, rank: 3 },
+              { Country: "Denmark", year: 2016, rank: 1 },
+              { Country: "Denmark", year: 2017, rank: 2 },
+              { Country: "Denmark", year: 2018, rank: 3 },
+              { Country: "Denmark", year: 2019, rank: 2 },
+              { Country: "Norway", year: 2015, rank: 4 },
+              { Country: "Norway", year: 2016, rank: 4 },
+              { Country: "Norway", year: 2017, rank: 1 },
+              { Country: "Norway", year: 2018, rank: 2 },
+              { Country: "Norway", year: 2019, rank: 3 },
+              { Country: "Canada", year: 2015, rank: 5 },
+              { Country: "Canada", year: 2016, rank: 6 },
+              { Country: "Canada", year: 2017, rank: 7 },
+              { Country: "Canada", year: 2018, rank: 7 },
+              { Country: "Canada", year: 2019, rank: 9 },
+              { Country: "Finland", year: 2015, rank: 6 },
+              { Country: "Finland", year: 2016, rank: 5 },
+              { Country: "Finland", year: 2017, rank: 5 },
+              { Country: "Finland", year: 2018, rank: 1 },
+              { Country: "Finland", year: 2019, rank: 1 },
+              { Country: "Netherlands", year: 2015, rank: 7 },
+              { Country: "Netherlands", year: 2016, rank: 7 },
+              { Country: "Netherlands", year: 2017, rank: 6 },
+              { Country: "Netherlands", year: 2018, rank: 6 },
+              { Country: "Netherlands", year: 2019, rank: 5 },
+              { Country: "Sweden", year: 2015, rank: 8 },
+              { Country: "Sweden", year: 2016, rank: 10 },
+              { Country: "Sweden", year: 2017, rank: 9 },
+              { Country: "Sweden", year: 2018, rank: 9 },
+              { Country: "Sweden", year: 2019, rank: 7 },
+              { Country: "New Zealand", year: 2015, rank: 9 },
+              { Country: "New Zealand", year: 2016, rank: 8 },
+              { Country: "New Zealand", year: 2017, rank: 8 },
+              { Country: "New Zealand", year: 2018, rank: 8 },
+              { Country: "New Zealand", year: 2019, rank: 8 },
+              { Country: "Australia", year: 2015, rank: 10 },
+              { Country: "Australia", year: 2016, rank: 9 },
+              { Country: "Australia", year: 2017, rank: 10 },
+              { Country: "Australia", year: 2018, rank: 10 },
+              { Country: "Austria", year: 2019, rank: 10 }
+            ]
+          },
+          mark: { type: "line", point: true, orient: "vertical" },
+          encoding: {
+            x: { field: "year", type: "ordinal" },
+            y: { field: "rank", type: "ordinal" },
+            color: {
+              field: "Country",
+              type: "nominal",
+              scale: {
+                domain: [
+                  "Switzerland",
+                  "Iceland",
+                  "Denmark",
+                  "Norway",
+                  "Canada",
+                  "Finland",
+                  "Sweden",
+                  "New Zealand",
+                  "Australia",
+                  "Netherlands",
+                  "Austria"
+                ],
+                range: [
+                  "gold",
+                  "blue",
+                  "green",
+                  "lightblue",
+                  "black",
+                  "grey",
+                  "darkgreen",
+                  "pink",
+                  "brown",
+                  "slateblue",
+                  "orange"
+                ]
+              }
+            }
+          }
+        };
+
+        vegaEmbed("#vis", yourVlSpec);
+      </script>
+    </section>
+      
+      
+    <section>
+    <h4 id="projectUpdate">Project Update (Not Part of the Project)</h4>
+    <ul>
+      <li>
+        We are currently working on a spidar chart to display how important each
+        factor is in contributing to each country's happiness score. The spidar
+        chart will be connected with the world map: when a user clicks on a
+        country, the spidar chart will update for that specific country will
+        show up.
+      </li>
+      <li>
+        The second part of our viz is a combo of line chart and bar chart. Users
+        can use the dropdown to explore the correlations between the selected
+        factor and happiness score based on the country selected from the world
+        map. Currently, when a user clicks on a dot on the happiness line, a top
+        10 world's happinest countries bar chart will show up. NOTICE: Further
+        work to be done to be make the connection between line chart and bar
+        chart more user-intuitive.
+      </li>
+      <li>
+        A next step of our project will include discover some interesting
+        user-cases; for example, we are planning to pick a country with an
+        eventhandler and explore from both qualitative and quantitative
+        perspectives why does that country have that happiness score.
+      </li>
+      <li>
+        Furthermore, we will add more text explanations and descriptions to each
+        visualizations so this project will be more user friendly.
+      </li>
+    </ul>
+    
+    </section>
+    </main>
+    
+  
   </body>
 </html>
