@@ -385,7 +385,7 @@ export default function Chart(selection,country){
 				.attr('transform',`translate(15,5) rotate(90)`)
 				.style("text-anchor", "start");
 			
-			yTitle=svgBar.selectAll('.title')
+			let yTitle=svgBar.selectAll('.title')
 				.data([time])
 
 			yTitle.enter()
