@@ -385,13 +385,13 @@ export default function Chart(selection,country){
 				.attr('transform',`translate(15,5) rotate(90)`)
 				.style("text-anchor", "start");
 			
-			let yTitle=svgBar.selectAll('.title')
+			let title=svgBar.selectAll('.title')
 				.data([time])
 
-			yTitle.enter()
+			title.enter()
 				.append('text')
 				.attr('class','title')
-				.merge(yTitle)
+				.merge(title)
 				.transition()
 				.duration(1000)
 				.attr('x',widthBar/3)
@@ -400,7 +400,7 @@ export default function Chart(selection,country){
 				.attr('font-family','"Andale Mono"')
 				.text(function(d){return 'Top 100 Happiness Score Country in '+d})
 
-			yTitle.exit().remove()
+			title.exit().remove()
 		})
 
 
