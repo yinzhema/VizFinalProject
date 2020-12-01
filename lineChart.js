@@ -423,7 +423,7 @@ export default function Chart(selection,country){
     console.log(selection)
 		line(selection,country)
 	} else if(event.target.value==='HS'){
-		selection='HS'
+		selection='LS'
     console.log(selection)
 		line(selection,country)
 	}
