@@ -18,10 +18,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- import the webpage's javascript file -->
     <script src="worldmap.js" defer type="module"></script>
-    <!-- <script defer src="lineChart.js"></script>
-    <script defer src="spiderChart.js"></script> -->
-    <!-- <script defer src="radarChart.js"></script>
-    <script defer src="drawRadar.js"></script> -->
     <script src="https://unpkg.com/topojson@3"></script>
     <script
       defer
@@ -32,32 +28,34 @@
 
   <body>
     <main class="scroll-container">
-    <section class = "intro">
-      <img src ="https://cdn.glitch.com/cd026228-e628-4e0f-8298-bc49b2bff20b%2Fgiphy.gif?v=1606209623864" width="160" height="160">
-      <h1>
-        Is the World Happy?
-      </h1>
-      <h4>
-      Ivan Ip, Kim Nguyen, Yinzhe Ma, and Anna Guo
-      </h4>
-      <p class = "descript">
-        As society enters a hyper-competitive phase in the 21st century, our
-        generation is experiencing a historic amount of pressure and
-        competition. 
+      <section class = "intro">
+        <img src ="https://cdn.glitch.com/cd026228-e628-4e0f-8298-bc49b2bff20b%2Fgiphy.gif?v=1606209623864" width="160" height="160">
+        <h1>
+          Is the World Happy?
+        </h1>
+        <h4>
+        Ivan Ip, Kim Nguyen, Yinzhe Ma, and Anna Guo
+        </h4>
+        <p class = "descript">
+          As society enters a hyper-competitive phase in the 21st century, our
+          generation is experiencing a historic amount of pressure and
+          competition. 
+          
+          Sometimes we find ourselves asking a seemingly simple yet important question: 
+          <br><br>
+            <b class = "question">Are we happy? And what makes us happy?</b>
+        </p>
+        <br><br><br><br>
         
-        Sometimes we find ourselves asking a seemingly simple yet important question: Are we happy? And what
-        makes us happy?
-      </p>
-      <br><br><br><br>
-      <div>
-        <svg class="arrow">
-          <a href="#world-map" id='hyperlink'>
-            <path class="a1" d="M0 0 L30 22 L60 0"></path>
-            <path class="a2" d="M0 20 L30 42 L60 20"></path>
-            <path class="a3" d="M0 40 L30 62 L60 40"></path>  
-          </a>
-        </svg>
-    </div>
+        <div>
+          <svg class="arrow">
+            <a href="#introduction" id="hyperlink">
+              <path class="a1" d="M0 0 L30 22 L60 0"></path>
+              <path class="a2" d="M0 20 L30 42 L60 20"></path>
+              <path class="a3" d="M0 40 L30 62 L60 40"></path>  
+            </a>
+          </svg>
+        </div>
       
       
       <p class = "descript" id = "data-source">
@@ -65,6 +63,41 @@
         <a id='dataSourceLink' href="https://www.gallup.com/analytics/247355/gallup-world-happiness-report.aspx">Gallup World Poll</a>
       </p>  
     </section>
+
+    <p id ="introduction">
+      <b class = "happiness">Happiness</b> is determined differently based on different people and different perspectives. 
+    Psychologists define happiness as a feeling of positive emotions of joy, interest, pride, life satisfaction and appreciation of moments. 
+    The state of global happiness refers to the state of well-being characterized by emotions ranging from immense contentment to intense joy.
+      <br><br><br><br><br>
+    However, there are certain factors that contribute to making a happy society. 
+    While individually, a person can feel happy receiving a gift, a person can also feel happy if content with their social and working connections. 
+    Therefore, 6 essential elements contribute to a happy society including: 
+    <br><br>
+    - GDP per capita
+    <br>
+    - Social Support
+    <br>
+    - Life Expectancy
+    <br>
+    - Human Freedom
+    <br>
+    - Generosity
+    <br>
+    - Perceptions of Corruption
+    </p>
+    <br><br><br><br>
+    
+    <div class = "center">
+      <svg class="arrow">
+        <a href="#world-map" id="hyperlink">
+          <path class="a1" d="M0 0 L30 22 L60 0"></path>
+          <path class="a2" d="M0 20 L30 42 L60 20"></path>
+          <path class="a3" d="M0 40 L30 62 L60 40"></path>  
+        </a>
+      </svg>
+    </div>
+    
+    <br><br>
       
 
 
@@ -76,18 +109,35 @@
         asked in the poll.
       </p>
       <div class="chart"></div>
+      <div id = "happiest">C1</div>
+      <div id = "saddest">C2</div>
       <!-- <div class="radarChart"></div>-->
     </section>
 
-    <section>
+    <section class='radar'>
       <h2>
-        Which factors have had the biggest impact on happiness as of 2019?
-      </h2>
-      <p id="instructions">
-        We are looking at the break down happiness factors for United States
-      </p>
-      <div class='spider'></div>
-      
+        Let's look at the factors 
+       </h2>
+       <p class = "factors">
+         These factors contribute in evaluating the happiness in each country.
+         <br>
+         <br>
+         <b class = "highlight">GDP per Capita:</b> measures economic prosperity
+         <br>
+         <b class = "highlight">Social Support:</b> measures interaction with friends and family
+         <br>
+         <b class = "highlight">Life Expectancy:</b> measures health      
+         <br>
+         <b class = "highlight">Freedom:</b> measures personal, civil, and economic freedom  
+         <br>
+         <b class = "highlight">Generosity:</b> measures readiness or liberality in giving 
+         <br>
+         <b class = "highlight">Perceptions of Corruption:</b> measures trust in government
+       </p>
+      <div class='center'>
+        <p id='instructions'>We are looking at the break down happiness factors for United States</p>
+        <div class='spider'></div>
+      </div>
     </section>
 
     <section class = "line-bar">
@@ -104,7 +154,7 @@
         <div class='column' id='columnChart'>
           <div class="user-control">
             <select id="line-type" class="form-control">
-              <option value="LE">Life Expectancy</option>
+              <option id='LE' value="LE">Life Expectancy</option>
               <option value="GDP">GDP per Capita</option>
               <option value="HF">Human Freedom Index</option>
               <option value="HS">Life Satisfaction Score</option>
@@ -126,7 +176,9 @@
         We are examining the rankings for the happiest countries in the past 4
         years based on their scores!
       </p>
+      <div class ="center">
       <div id="vis"></div>
+      </div>
       <script type="text/javascript">
         var yourVlSpec = {
           $schema: "https://vega.github.io/schema/vega-lite/v4.json",
@@ -230,38 +282,33 @@
       </script>
     </section>
       
+    <section class = "conclusion">
+      <br>
+      <h2 class = "final">
+        What does this mean? &#129488;
+      </h2>
+     
+      <p class ="final-thoughts">
+        
+        After examining <b class = "emphasize">145 countries</b> over the past 4 years, we have observed the trends in various factors that
+        contribute to happiness.
+        The average happiness score for 2019 is <b class = "emphasize">5.46 out of 10</b> which increased from 5.33 in 2016. Some of the happiest countries tend to 
+        locate in North America and Northern Europe regions. Furthermore, There is no one dominant factor that contributes to the happiness of people from around the world; however, social support,
+        GDP per capita, and life expectancy are the more important factors according to our analysis, which make us reflect upon what contribute to our overall view of happiness.
+        <br><br><br><br><br><br>As the world constantly evolves, <br><br>
+        <b class = "emphasize">What do you think will happen to happiness scores in the future?</b>
+
+      </p>
       
-    <section>
-    <h4 id="projectUpdate">Project Update (Not Part of the Project)</h4>
-    <ul>
-      <li>
-        We are currently working on a spidar chart to display how important each
-        factor is in contributing to each country's happiness score. The spidar
-        chart will be connected with the world map: when a user clicks on a
-        country, the spidar chart will update for that specific country will
-        show up.
-      </li>
-      <li>
-        The second part of our viz is a combo of line chart and bar chart. Users
-        can use the dropdown to explore the correlations between the selected
-        factor and happiness score based on the country selected from the world
-        map. Currently, when a user clicks on a dot on the happiness line, a top
-        10 world's happinest countries bar chart will show up. NOTICE: Further
-        work to be done to be make the connection between line chart and bar
-        chart more user-intuitive.
-      </li>
-      <li>
-        A next step of our project will include discover some interesting
-        user-cases; for example, we are planning to pick a country with an
-        eventhandler and explore from both qualitative and quantitative
-        perspectives why does that country have that happiness score.
-      </li>
-      <li>
-        Furthermore, we will add more text explanations and descriptions to each
-        visualizations so this project will be more user friendly.
-      </li>
-    </ul>
-    
+
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <h1 class = "conclude">
+        Thank you!
+      </h1>
     </section>
     </main>
     

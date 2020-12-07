@@ -1,4 +1,3 @@
-
 export default function Chart(selection,country){
 	d3.select('.line').html('')
 	d3.select('.bar').html('')
@@ -102,8 +101,8 @@ export default function Chart(selection,country){
 
 
 			xScale.domain(d3.extent(filteredData,d=>d.key))
-			yScale.domain([d3.min(filteredData,d=>d.value),d3.max(filteredData,d=>d.value)])
-			yScale2.domain([d3.min(happinessData,d=>d.value),d3.max(happinessData,d=>d.value)])
+			yScale.domain([0,d3.max(filteredData,d=>d.value)]) //d3.min(filteredData,d=>d.value)
+			yScale2.domain([0,d3.max(happinessData,d=>d.value)]) //d3.min(happinessData,d=>d.value)
 			var line=d3.line()
 			.x(function(d){
 				return xScale(d.key)
@@ -190,7 +189,7 @@ export default function Chart(selection,country){
 					.on('click', function(event,d){
 						const pos=d3.pointer(event,window)
 						const yr=xScale.invert(pos[0]).getYear()-100+2000-3
-						bar(yr.toString())
+						bar(yr.toString(),country)
 					})
 
 
@@ -253,8 +252,8 @@ export default function Chart(selection,country){
 
 		})
 	}
-	const marginBar = ({top: 100, right: 20, bottom: 40, left: 20})
-	const widthBar=1000-marginBar.left-marginBar.right,
+	const marginBar = ({top: 100, right: 200, bottom: 120, left: 20})
+	const widthBar=1200-marginBar.left-marginBar.right,
 		heightBar=500-marginBar.top-marginBar.bottom
 
 	const svgBar=d3.select('.bar').append('svg')
@@ -263,7 +262,7 @@ export default function Chart(selection,country){
 		.append('g')
 		.attr('transform','translate('+marginBar.left+','+marginBar.top+')')
 		
-	function bar(time){
+	function bar(time,country){
 
 		d3.select('hr').classed('hidden',false)
 
@@ -314,23 +313,25 @@ export default function Chart(selection,country){
 
 			ScoreScale.domain([d3.min(filteredData,d=>d.Score),d3.max(filteredData,d=>d.Score)])
 
-			colorScale.domain([d3.min(filteredData,d=>d.Score)*30,d3.max(filteredData,d=>d.Score)*60])
+			colorScale.domain([0,d3.max(filteredData,d=>d.Score)*40])
 
 			const bars=svgBar.selectAll('.barChart')
 				.data(filteredData,d=>d)
 
 			bars.enter()
 				.append("rect")
+				.attr('class','barChart')
 				.attr('x',function(d,i){
-					return xScale(d.Country)+3
+					console.log(xScale(d.Country))
+					return xScale(d.Country)
 				})
 				.attr('y',function(d,i){
 					return heightBar-ScoreScale(d.Score)
 				})
-				.attr('opacity',0.6)
+				.attr('opacity',0.3)
 				.merge(bars)
 				.transition()
-				.duration(1000)
+				.duration(1500)
 				.attr('x',function(d,i){
 					return xScale(d.Country)+3
 				})
@@ -342,9 +343,72 @@ export default function Chart(selection,country){
 					return ScoreScale(d.Score)
 				})
 				.attr('fill',function(d){
-					return colorScale(d.Score*100)
+					if (d.Country==country){
+						return '#F78181'
+					}
+					else{
+						return colorScale(d.Score*100)
+					}
+					//return colorScale(d.Score*100)
 				})
 				.attr('opacity',1)
+
+			bars.exit()
+				.transition()
+				.attr('x',function(d,i){
+					// if (d==undefined){
+					// 	return 0
+					// }
+					// return xScale(d.Country)+10
+					return 0
+				})
+				.attr('y',function(d,i){
+					return heightBar-ScoreScale(d.Score)
+				})
+				.duration(1500)
+				.remove()
+
+			var countryLabel=svgBar.selectAll('.countryLabel')
+				.data(filteredData,d=>d)
+
+			let label=0
+
+			countryLabel.enter()
+				.append('text')
+				.attr('class','countryLabel')
+				.merge(countryLabel)
+				.transition()
+				.duration(1500)
+				.attr('x',function(d){
+					return xScale(d.Country)+3
+				})
+				.attr('y',function(d){
+					return heightBar-ScoreScale(d.Score)-10
+				})
+				.attr('opacity',function(d){
+					if (d.Country==country){
+						label=1
+						return 1
+					} else{
+						//label=0
+						//d3.select('.countryLabel').html('')
+						return 0
+					}
+				})
+				.text('Here is the selected country')
+			countryLabel.exit()
+				.remove()
+			
+			if (label==0){
+				svgBar.append('text')
+					.attr('class','labelAppeared')
+					.attr('x',365)
+					.attr('y',10)
+					.text('The selected country is not in the Top 100 ranking this year')
+
+			} else{
+				d3.select('.labelAppeared').html('')
+			}
 				// .on('mouseover',(event,d)=>{
 				// 	const pos=d3.pointer(event, window)
 				// 	d3.select("#tooltipBar")
@@ -359,10 +423,6 @@ export default function Chart(selection,country){
 				// .on('mouseout',(event,d)=>{
 				// 	d3.select('#tooltipBar').classed('hidden',true)
 				// })
-			
-			bars.exit()
-				.transition()
-				.remove()
 
 
 			const xAxis=d3.axisBottom()
@@ -407,6 +467,7 @@ export default function Chart(selection,country){
 	}
 
 	line(selection,country)
+  	bar('2019',country)
 
 	const dropdownElement=document.querySelector("#line-type");
 	dropdownElement.addEventListener('change',(event)=>{
@@ -422,7 +483,7 @@ export default function Chart(selection,country){
 		selection='HF'
     console.log(selection)
 		line(selection,country)
-	} else if(event.target.value==='HS'){
+	} else if(event.target.value==='LS'){
 		selection='LS'
     console.log(selection)
 		line(selection,country)

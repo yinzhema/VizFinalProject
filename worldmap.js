@@ -1,23 +1,23 @@
-import spiderChart from './spiderChart.js'
 import line from './lineChart.js'
-import bar from './lineChart.js'
+import spiderChart from './spiderChart.js'
 
 let country='United States'
 let selection='LE'
 
-spiderChart(country);
 line(selection,country)
-
+spiderChart(country)
 
 Promise.all([ // load multiple files
-    d3.csv('happinesssss.csv', d3.autoType),
+    d3.csv('happinesss.csv', d3.autoType),
     d3.json('world-110m.json')
 ]).then(data=>{ // or use destructuring :([airports, wordmap])=>{ ... 
     let happiness = data[0]; // data1.csv
     let worldmap = data[1]; // data2.json
 
-let margin = { top: 40, right: 20, bottom: 40, left: 100 },
-width = 750 - margin.left - margin.right,
+    console.log("happiness", happiness)
+
+let margin = { top: 40, right: 100, bottom: 40, left: 100 },
+width = 800 - margin.left - margin.right,
 height = 600 - margin.top - margin.bottom;
 
 
@@ -31,12 +31,47 @@ let svg = d3
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 const features = topojson.feature(worldmap, worldmap.objects.countries).features;
+    console.log('features', features);
     
 const projection = d3.geoMercator()
 .fitExtent([[0,0], [width,height]], topojson.feature(worldmap, worldmap.objects.countries));
 
+var max = (d3.max(happiness, function (d) {return d['happinessScore']}));
+var min = (d3.min(happiness, function (d) {return d['happinessScore']}));
+
+d3.select('#happiest')
+.style('display','block')
+.style('background-color', 'rgb(129, 190, 247)')
+  .style('opacity',0.7)
+.style('color','white')
+.style('border-radius', '50%')
+.style('width','200px')
+.style('height','200px')
+.style('text-align','center')
+.style('font-weight','3')
+.style('padding','10px')
+.style('font-size','14pt')
+.attr('class', 'grow')
+.html("<br>"+"<br>"+"<u>"+"Happiest Country:"+"</u>"+"<br>"+"<b>"+" Finland" +"</b>"+ "<br>"+"<u>"+"Happiness Score:"+"</u>"+ " " + max)
+
+d3.select('#saddest')
+.style('display','block')
+.style('background-color','lightcoral')
+.style('opacity',0.7)
+.style('color','white')
+.style('border-radius', '50%')
+.style('width','160px')
+.style('height','160px')
+.style('text-align','center')
+.style('font-weight','3')
+.style('padding','10px')
+.style('font-size','14pt')
+.attr('class', 'grow')
+.html("<br>"+"<u>"+"Least Happy Country:"+"</u>"+"<br>"+"<b>"+"South Sudan" +"</b>" + "<br>"+"<u>"+"Happiness Score:"+"</u>"+ " " + min) 
+  
+  
 // The Tooltip
-const Tooltip = d3.select('body')
+const Tooltip = d3.select('.chart')
 .append('div')
 .attr('class', 'tooltip')
 .style('visibility', 'hidden')
@@ -58,7 +93,7 @@ const path = d3.geoPath()
 const colorScale = d3.scaleThreshold()
     .domain([1, 3, 5, 7, 9, 11])
     //.domain(['N/A', 1-2, 3-4, 5-6, 7-8,9-10])
-    .range(d3.schemeBlues[6]);
+    .range(d3.schemeBlues[5]);
 
 
 
@@ -87,7 +122,10 @@ svg.selectAll("path")
       .attr('opacity', '0.5')
       .attr('stroke-width', '1px');
     // Show the Tooltip
-    Tooltip.style('visibility', 'visible');
+    const pos = d3.pointer(event,window);
+    Tooltip.style('visibility', 'visible')
+            .style("top",pos[1]-20+'px')
+            .style("left",pos[0]+20+'px');
   })
   .on('mouseleave', (event, features) => {
     // This clears out the remaining styles on all other countries not currently being hovered
@@ -107,23 +145,24 @@ svg.selectAll("path")
       Tooltip
         .html(features.properties.name + '<br>' + 'Happiness Score: ' + country.happinessScore)
         .style('left', (event.x + 10) + 'px')
-        .style('top', (event.y + 10) + 'px');
+        .style('top', (event.y +10) + '-px');
     } else {
       // There is no agg for this country, display name and a 0 count
       Tooltip
         .html(features.properties.name + '<br>' + 'Happiness Score: No Data')
         .style('left', (event.x + 10) + 'px')
-        .style('top', (event.y + 10) + 'px');
+        .style('top', (event.y + 10) + '-1px');
     }
   })
   .on('click',(event,features)=>{
     const country = happiness.find(s=>s.Country==features.properties.name);
     if (country){
+      document.getElementById('LE').selected=true
       spiderChart(country.Country);
       line(selection,country.Country);
+      console.log(country.Country)
       document.getElementById('instructions').innerText="We are looking at the break down happiness factors for "+country.Country
-      document.getElementById('lineInstructions').innerText="We are exploring the correlation betweena Happiness Score and these following factors: GDP per Capita, Life Expectancy, Freedom, Life Satisfaction. We are currently exploring these correlations in "+country.Country
-    }
+      document.getElementById('lineInstructions').innerText="We are exploring the correlation betweena Happiness Score and these following factors: GDP per Capita, Life Expectancy, Freedom, Life Satisfaction. We are currently exploring these correlations in "+country.Country}
   })
 
 
@@ -137,25 +176,49 @@ svg.append("path")
 .attr("class", "subunit-boundary")
 
 //legend
-var labels = ['N/A', '1-2', '3-4', '5-6', '7-8','9-10'];
+var g = svg.append("g")
+    .attr("class", "legendThreshold")
+    .attr("transform", "translate(20,20)");
+  
+g.append("text")
+    .attr("class", "caption")
+    .attr("x", 555)
+    .attr("y", 350)
+    .text("Happiness Score");  
+
+g.append("rect")
+    .attr("x", width -10)
+    .attr("width", 16)
+    .attr("height", 12)
+    .attr('y',height-160)
+    .attr('fill','darkgray')
+  
+g.append("text")
+    .attr("x", 608)
+    .attr("y", 371)
+    .text("No Data"); 
+  
+
+var labels = ['0','1-2', '3-4', '5-6', '7-8','9-10'];
 var legend = svg.selectAll(".legend")
         .data(colorScale.domain())
         .enter()
         .append("g")
         .attr("transform", function(d, i) { return "translate(" + "-50," + i * 20 + ")"; });
-    
+  
+  
     legend.append("rect")
-            .attr("x", width + 10)
-            .attr("width", 12)
+            .attr("x", width + 60)
+            .attr("width", 16)
             .attr("height", 12)
-            .attr('y',height-150)
+            .attr('y',height-120)
             .style("fill", colorScale);
 
     legend.append("text")
             .data(labels)
-            .attr("x", width + 26)
+            .attr("x", width + 80)
             .attr("dy", ".65em")
-            .attr('y',height-150)
+            .attr('y',height-120)
             .text(function(d) {
                 return d
             });
@@ -172,11 +235,5 @@ var zoom = d3.zoom()
       svg.call(zoom);
 
 });
-
-
-
-
-
-
 
 

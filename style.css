@@ -1,197 +1,226 @@
-a{
-  transition: 10s;
-}
-
 /*map*/
 .country {
-    stroke: #fff;
-    stroke-width:1px;
+  stroke: #fff;
+  stroke-width:1px;
 }
 .country:hover{
-  opacity: .6;
+opacity: .6;
 }
 
-/* All the snapping stuff */
-.scroll-container {
-height: 100vh;
-overflow-y: scroll;
-scroll-snap-type: y mandatory;
+.caption {
+    font-weight: bold;
 }
+
+#happiest{
+  position: absolute;
+  text-align: center;
+  left: 900px;
+  top: 1850px;
+  padding: 10px;
+}
+
+
+#saddest{
+  position: absolute;
+  text-align: center;
+  left: 1000px;
+  top: 2000px;
+  padding: 10px;
+}
+
+.grow:hover
+{
+  -webkit-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
+}
+
 
 section {
-scroll-snap-align: start;
 height: 110vh;
-/* padding: 50px; */
+/* padding: 20px; */
 }
 
 .intro{
-  height: 630px;
-  text-align: center;
-  padding: 40px;
-  background-color: #F2F2F2;
-  margin-bottom: 50px;
+height: 650px;
+text-align: center;
+padding: 40px;
+background-color: #F2F2F2;
+margin-bottom:100px;
 }
 
 .line-bar{
-  margin-top:10px;
+margin-top:10px;
+height: 630px;
 }
 
 img{
-  padding: 0;
+padding: 0;
 }
 
 .descript{
-  color: black;
-  font-family: "Andale Mono", AndaleMono, monospace; font-size: 18px;
+color: black;
+font-family: "Andale Mono", AndaleMono, monospace; font-size: 18px;
 }
 
 a{
-  color:#81BEF7;
-  text-decoration: none;
+color:white;
+text-decoration: none;
+font-size: 7pt;
 }
 
 h4{
-  font-family: "Andale Mono", AndaleMono, monospace; font-size: 20pt;
-  font-weight: bolder;
-  margin-left: 100px;
-  margin-right: 100px;
+font-family: "Andale Mono", AndaleMono, monospace; font-size: 20pt;
+font-weight: bolder;
+margin-left: 100px;
+margin-right: 100px;
 }
 h1 {
-  font-family: "Andale Mono", AndaleMono, monospace;
-  text-shadow: 2px 2px 2px #ccc;
-  font-size: 55pt;
-  font-weight: bolder;
-  color: #81BEF7;
-  line-height: 30px;
+font-family: "Andale Mono", AndaleMono, monospace;
+text-shadow: 2px 2px 2px #ccc;
+font-size: 55pt;
+font-weight: bolder;
+color: #81BEF7;
+line-height: 30px;
 }
 
 h2 {
-  text-align: center;
-  font-family: "Andale Mono", AndaleMono, monospace;
-  margin-top: 10px;
-  background-color: #81BEF7;
-  padding: 15px;
-  font-size: 25pt;
+text-align: center;
+font-family: "Andale Mono", AndaleMono, monospace;
+margin-top: 10px;
+background-color: rgb(129, 190, 247,.6);
+padding: 15px;
+font-size: 25pt;
 }
 
 p {
-  font-family: "Andale Mono", AndaleMono, monospace; font-size: 12pt;
-  font-size: 14pt;
-  text-align: center;
-  margin-left: 25px;
-  margin-right: 25px;
-  color:black;
+font-family: "Andale Mono", AndaleMono, monospace; font-size: 12pt;
+font-size: 14pt;
+text-align: center;
+margin-left: 25px;
+margin-right: 25px;
+color:black;
 ;
 }
 
 #data-source{
-  position: absolute;
-  width: 100px;
-  background-color: #81BEF7;
-  padding: 6px;
-  font-size: 10pt;
-  bottom: 0;
-  left:0;
-  color:black;
+position: absolute;
+width: 100px;
+background-color: #81BEF7;
+padding: 6px;
+font-size: 10pt;
+top: 0;
+left:0;
+color:black;
+opacity: .8
 }
 
 #dataSourceLink{
-  color:grey;
+color:grey;
 }
 
 .world-map{
-  background-color: rbg(194, 207, 200);
+background-color: rbg(194, 207, 200);
+height: 105vh;
+
+}
+.line-bar{
+height: 160vh;
 }
 
 .spider{
-  margin-left: 300px;
-}
-
-.line-bar{
-  height: 160vh;
-}
-
-body{
-  background-color: #F2F2F2;
-}
-
-h3,#vis{
-  margin-left: 120px;
-}
-
-select{
-  font-size: 12pt;
-  width:300px;
-  height:40px;
-}
-
-.row{
-  display:table;
-  margin-left: 35px;
-}
-
-.column{
-  float:left;
-}
-
-#columnChart{
-  width:70%;
-  margin-left: 50px;
-  margin-top:18px;
-}
-
-.line{
-  margin-top:30px;
-}
-
-.bar{
   margin-left:100px;
 }
 
+.radar{
+  height:130vh;
+}
+
+body{
+background-color: #F2F2F2;
+}
+
+h3,#vis{
+margin-left: 120px;
+}
+
+select{
+font-size: 12pt;
+width:300px;
+height:40px;
+}
+
+.row{
+display:table;
+margin-left: 35px;
+}
+
+.column{
+float:left;
+}
+
+#columnChart{
+width:70%;
+margin-left: 50px;
+margin-top:18px;
+}
+
+.line{
+margin-top:30px;
+}
+
+.bar{
+margin-left:150px;
+}
+
 #columnInstr{
-  width:25%;
+width:25%;
 }
 
 
 #selectIntruction,#lineChartIntruction{
-    background-color:#81BEF7;
-    color:black;
-    overflow-wrap: break-word;
-    width:300px;
+  background-color: rgb(129, 190, 247,.4);
+  color:black;
+  overflow-wrap: break-word;
+  width:300px;
+  padding: 5px;
+  font-size: 10pt;
 }
 
 #selectInstruction{
-  margin-top: 0px;
+margin-top: 0px;
 }
 
 #lineChartIntruction{
-  margin-top:50px;
+margin-top:50px;
+background-color: rgb(247,129,129,.4);
+
 }
 
 .hidden{
-  display:None;
+display:None;
 }
 
 #projectUpdate{
-  margin-left:10px;
+margin-left:10px;
 }
 
 /* set arrow positioning */
 .arrow {
-	width: 60px;
-	height: 92px;
+width: 60px;
+height: 92px;
 
-	left: 42%;
-	margin-left: 0px;
-	bottom: 15%;
-  z-index:999;
+left: 42%;
+margin-left: 0px;
+bottom: 15%;
+z-index:999;
 }
 /* set arrow styles */
 .arrow path {
-	stroke:#81BEF7;
-	stroke-width: 7px;
-	fill: transparent;	
-	animation: down 2s infinite;
+stroke:#81BEF7;
+stroke-width: 7px;
+fill: transparent;	
+animation: down 2s infinite;
 }
 /* arrow keyframe animation */
 @keyframes down{
@@ -207,5 +236,84 @@ select{
 
 
 .factorText{
-  position:flex;
+position:flex;
+}
+
+
+
+#rankingTitle{
+width:100%;
+}
+
+.highlight{
+background-color: rgb(173, 173, 173,.3);
+padding: 3px;
+line-height: 1.6;
+}
+
+.factors{
+font-size: 10pt;
+}
+
+.form-control{
+width:600px;
+margin-left:15px;
+
+}
+
+.center{
+display: table;
+margin: 0 auto;
+}
+
+.emphasize{
+font-size: 25pt;
+background-color: rgb(129, 190, 247,.2);
+padding: 5px;
+
+}
+
+.question{
+font-size:25pt;
+}
+
+.happiness{
+font-size:20pt;
+}
+
+.conclude{
+font-size: 16pt;
+font-family: "Andale Mono", AndaleMono, monospace;
+text-shadow: 2px 4px 2px white;
+font-weight: bolder;
+text-align:center;
+color: black;
+}
+
+.final-thoughts{
+margin-left: 220px;
+margin-right: 220px;
+line-height:1.5;
+}
+
+.conclusion{
+height: 100vh;
+}
+.final{
+font-size: 60pt;
+text-shadow: 2px 4px 2px dimgray;
+color: white;
+
+}
+
+#introduction{
+/* margin-top:50px; */
+margin-left: 220px;
+margin-right: 220px;
+margin-bottom: 50px;
+line-height:1.5;
+}
+
+.labelAppeared{
+font-style: italic;
 }
