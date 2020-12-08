@@ -180,103 +180,129 @@
       <div id="vis"></div>
       </div>
       <script type="text/javascript">
-        var yourVlSpec = {
-          $schema: "https://vega.github.io/schema/vega-lite/v4.json",
-          title: { text: "Top Countries  Rankings", frame: "bounds" },
-          width: 600,
-          height: 400,
-          data: {
-            values: [
-              { Country: "Switzerland", year: 2015, rank: 1 },
-              { Country: "Switzerland", year: 2016, rank: 2 },
-              { Country: "Switzerland", year: 2017, rank: 4 },
-              { Country: "Switzerland", year: 2018, rank: 5 },
-              { Country: "Switzerland", year: 2019, rank: 6 },
-              { Country: "Iceland", year: 2015, rank: 2 },
-              { Country: "Iceland", year: 2016, rank: 3 },
-              { Country: "Iceland", year: 2017, rank: 3 },
-              { Country: "Iceland", year: 2018, rank: 4 },
-              { Country: "Iceland", year: 2019, rank: 4 },
-              { Country: "Denmark", year: 2015, rank: 3 },
-              { Country: "Denmark", year: 2016, rank: 1 },
-              { Country: "Denmark", year: 2017, rank: 2 },
-              { Country: "Denmark", year: 2018, rank: 3 },
-              { Country: "Denmark", year: 2019, rank: 2 },
-              { Country: "Norway", year: 2015, rank: 4 },
-              { Country: "Norway", year: 2016, rank: 4 },
-              { Country: "Norway", year: 2017, rank: 1 },
-              { Country: "Norway", year: 2018, rank: 2 },
-              { Country: "Norway", year: 2019, rank: 3 },
-              { Country: "Canada", year: 2015, rank: 5 },
-              { Country: "Canada", year: 2016, rank: 6 },
-              { Country: "Canada", year: 2017, rank: 7 },
-              { Country: "Canada", year: 2018, rank: 7 },
-              { Country: "Canada", year: 2019, rank: 9 },
-              { Country: "Finland", year: 2015, rank: 6 },
-              { Country: "Finland", year: 2016, rank: 5 },
-              { Country: "Finland", year: 2017, rank: 5 },
-              { Country: "Finland", year: 2018, rank: 1 },
-              { Country: "Finland", year: 2019, rank: 1 },
-              { Country: "Netherlands", year: 2015, rank: 7 },
-              { Country: "Netherlands", year: 2016, rank: 7 },
-              { Country: "Netherlands", year: 2017, rank: 6 },
-              { Country: "Netherlands", year: 2018, rank: 6 },
-              { Country: "Netherlands", year: 2019, rank: 5 },
-              { Country: "Sweden", year: 2015, rank: 8 },
-              { Country: "Sweden", year: 2016, rank: 10 },
-              { Country: "Sweden", year: 2017, rank: 9 },
-              { Country: "Sweden", year: 2018, rank: 9 },
-              { Country: "Sweden", year: 2019, rank: 7 },
-              { Country: "New Zealand", year: 2015, rank: 9 },
-              { Country: "New Zealand", year: 2016, rank: 8 },
-              { Country: "New Zealand", year: 2017, rank: 8 },
-              { Country: "New Zealand", year: 2018, rank: 8 },
-              { Country: "New Zealand", year: 2019, rank: 8 },
-              { Country: "Australia", year: 2015, rank: 10 },
-              { Country: "Australia", year: 2016, rank: 9 },
-              { Country: "Australia", year: 2017, rank: 10 },
-              { Country: "Australia", year: 2018, rank: 10 },
-              { Country: "Austria", year: 2019, rank: 10 }
-            ]
-          },
-          mark: { type: "line", point: true, orient: "vertical" },
-          encoding: {
-            x: { field: "year", type: "ordinal" },
-            y: { field: "rank", type: "ordinal" },
-            color: {
-              field: "Country",
-              type: "nominal",
-              scale: {
-                domain: [
-                  "Switzerland",
-                  "Iceland",
-                  "Denmark",
-                  "Norway",
-                  "Canada",
-                  "Finland",
-                  "Sweden",
-                  "New Zealand",
-                  "Australia",
-                  "Netherlands",
-                  "Austria"
-                ],
-                range: [
-                  "gold",
-                  "blue",
-                  "green",
-                  "lightblue",
-                  "black",
-                  "grey",
-                  "darkgreen",
-                  "pink",
-                  "brown",
-                  "slateblue",
-                  "orange"
-                ]
-              }
-            }
-          }
-        };
+         var yourVlSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "Drag a rectangular brush to show (first 20) selected points in a table.",
+  "data": {
+  "values": [
+              { "Country": "Switzerland", "Year": 2015, "Rank": 1 },
+              { "Country": "Switzerland", "Year": 2016, "Rank": 2 },
+              { "Country": "Switzerland", "Year": 2017, "Rank": 4 },
+              { "Country": "Switzerland", "Year": 2018, "Rank": 5 },
+              { "Country": "Switzerland", "Year": 2019, "Rank": 6 },
+              { "Country": "Iceland", "Year": 2015, "Rank": 2 },
+              { "Country": "Iceland", "Year": 2016, "Rank": 3 },
+              { "Country": "Iceland", "Year": 2017, "Rank": 3 },
+              { "Country": "Iceland", "Year": 2018, "Rank": 4 },
+              { "Country": "Iceland", "Year": 2019, "Rank": 4 },
+              { "Country": "Denmark", "Year": 2015, "Rank": 3 },
+              { "Country": "Denmark", "Year": 2016, "Rank": 1 },
+              { "Country": "Denmark", "Year": 2017, "Rank": 2 },
+              { "Country": "Denmark", "Year": 2018, "Rank": 3 },
+              { "Country": "Denmark", "Year": 2019, "Rank": 2 },
+              { "Country": "Norway", "Year": 2015, "Rank": 4 },
+              { "Country": "Norway", "Year": 2016, "Rank": 4 },
+              { "Country": "Norway", "Year": 2017, "Rank": 1 },
+              { "Country": "Norway", "Year": 2018, "Rank": 2 },
+              { "Country": "Norway", "Year": 2019, "Rank": 3 },
+              { "Country": "Canada", "Year": 2015, "Rank": 5 },
+              { "Country": "Canada", "Year": 2016, "Rank": 6 },
+              { "Country": "Canada", "Year": 2017, "Rank": 7 },
+              { "Country": "Canada", "Year": 2018, "Rank": 7 },
+              { "Country": "Canada", "Year": 2019, "Rank": 9 },
+              { "Country": "Finland", "Year": 2015, "Rank": 6 },
+              { "Country": "Finland", "Year": 2016, "Rank": 5 },
+              { "Country": "Finland", "Year": 2017, "Rank": 5 },
+              { "Country": "Finland", "Year": 2018, "Rank": 1 },
+              { "Country": "Finland", "Year": 2019, "Rank": 1 },
+              { "Country": "Netherlands", "Year": 2015, "Rank": 7 },
+              { "Country": "Netherlands", "Year": 2016, "Rank": 7 },
+              { "Country": "Netherlands", "Year": 2017, "Rank": 6 },
+              { "Country": "Netherlands", "Year": 2018, "Rank": 6 },
+              { "Country": "Netherlands", "Year": 2019, "Rank": 5 },
+              { "Country": "Sweden", "Year": 2015, "Rank": 8 },
+              { "Country": "Sweden", "Year": 2016, "Rank": 10 },
+              { "Country": "Sweden", "Year": 2017, "Rank": 9 },
+              { "Country": "Sweden", "Year": 2018, "Rank": 9 },
+              { "Country": "Sweden", "Year": 2019, "Rank": 7 },
+              { "Country": "New Zealand", "Year": 2015, "Rank": 9 },
+              { "Country": "New Zealand", "Year": 2016, "Rank": 8 },
+              { "Country": "New Zealand", "Year": 2017, "Rank": 8 },
+              { "Country": "New Zealand", "Year": 2018, "Rank": 8 },
+              { "Country": "New Zealand", "Year": 2019, "Rank": 8 },
+              { "Country": "Australia", "Year": 2015, "Rank": 10 },
+              { "Country": "Australia", "Year": 2016, "Rank": 9 },
+              { "Country": "Australia", "Year": 2017, "Rank": 10 },
+              { "Country": "Australia", "Year": 2018, "Rank": 10 },
+              { "Country": "Austria", "Year": 2019, "Rank": 10 }
+            ]}
+
+,
+  "transform": [{
+    "window": [{"op": "row_number", "as": "row_number"}]
+  }],
+  "hconcat": [{
+    "selection": {
+      "brush": {
+        "type": "interval"
+      },   
+      "industry": {
+      "type": "multi", "fields": ["Country"], "bind": "legend"
+    }
+    },"width":500,"height":400,"title":{"text":"World Happiness Ranking","fontSize":25,"color":"darkslategray","subtitle":"Brush and hover over line graph or select a country from the legend","lineHeight":20},
+        "mark": {
+    "type": "line",
+    "point": { "filled": true,"size": 100},
+    "strokeWidth": 2,
+    "tooltip":true
+  },
+    "encoding": {
+      "x": {"field": "Year", "type": "ordinal"},
+      "y": {"field": "Rank", "type": "quantitative"},
+      "color": {
+        "condition": {"selection": "brush", "field": "Country", "type": "nominal"},
+        "value": "grey"
+      },
+          "opacity": {
+      "condition": {"selection": "industry", "value": 1},
+      "value": 0.2
+    }
+    }
+  }, {
+    "transform": [
+      {"filter": {"selection": "brush"}},
+      {"window": [{"op": "rank", "as": "rank"}]},
+      {"filter": {"field": "rank", "lt": 20}}
+    ],
+    "hconcat": [{
+      "width": 50,
+      "title": "Year",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Year", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    }, {
+      "width": 150,
+      "title": "Country",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Country", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    }, {
+      "width": 50,
+      "title": "Rank",
+      "mark": "text",
+      "encoding": {
+        "text": {"field": "Rank", "type": "nominal"},
+        "y": {"field": "row_number", "type": "ordinal", "axis": null}
+      }
+    }]
+  }],
+  "resolve": {"legend": {"color": "independent"}}
+}
+;
 
         vegaEmbed("#vis", yourVlSpec);
       </script>
